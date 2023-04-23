@@ -1,61 +1,73 @@
-#include <stdio.h>
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+int i,j,k,a,b,u,v,n,ne=1;
+int min,mincost=0,cost[9][9],parent[9];
 
-int main()
+int find(int);
+int uni(int,int);
+
+void main()
 {
-    int n;            // number of nodes
-    int cost[10][10]; // cost adjacency matrix
-    printf("Enter the number of nodes: ");
-    scanf("%d", &n);
-
-    printf("Enter the adjacency matrix:\n");
-    int i, j;
-    for (i = 0; i < n; i++)
+    clrscr();
+    printf("\n\tImplementation of Kruskal's algorithm\n");
+    printf("\nEnter the no. of vertices:");
+    scanf("%d",&n);
+    printf("\nEnter the cost adjacency matrix:\n");
+    for(i=0;i<n;i++)
     {
-        for (j = 0; j < n; j++)
+        for(j=0;j<n;j++)
         {
-            scanf("%d", &cost[i][j]);
-            if (cost[i][j] == 0)
-            {
-                cost[i][j] = 999; // set 0 cost to a high value to represent no edge
-            }
+            scanf("%d",&cost[i][j]);
+            if(cost[i][j]==0)
+                cost[i][j]=999;
         }
     }
-
-    int visited[10] = {0};
-    visited[0] = 1;  // start from node 0
-    int ne = 1;      // number of visited nodes
-    int mincost = 0; // total cost of MST
-
-    while (ne < n)
+    printf("The edges of Minimum Cost Spanning Tree are\n");
+    while(ne < n)
     {
-        int min = 999;
-        int a = -1, b = -1; // nodes corresponding to the minimum edge
-        for (i = 0; i < n; i++)
+        for(i=0,min=999;i<n;i++)
         {
-            if (visited[i])
-            { // only consider visited nodes
-                for (j = 0; j < n; j++)
+            for(j=0;j<n;j++)
+            {
+                if(cost[i][j] < min)
                 {
-                    if (!visited[j] && cost[i][j] < min)
-                    { // find the minimum edge to an unvisited node
-                        min = cost[i][j];
-                        a = i;
-                        b = j;
-                    }
+                    min=cost[i][j];
+                    a=u=i;
+                    b=v=j;
                 }
             }
         }
-        if (a != -1 && b != -1)
-        { // if a minimum edge was found
-            printf("Edge %d: (%d, %d) cost %d\n", ne, a, b, min);
-            visited[b] = 1; // mark the new node as visited
-            ne++;
-            mincost += min; // add the cost of the edge to the total cost
+        u=find(u);
+        v=find(v);
+        if(uni(u,v))
+        {
+            printf("%d edge (%d,%d) =%d\n",ne++,a,b,min);
+            mincost +=min;
         }
+        cost[a][b]=cost[b][a]=999;
     }
-    printf("Minimum cost: %d\n", mincost); // print the total cost of the MST
+    printf("\n\tMinimum cost = %d\n",mincost);
+    getch();
+}
+
+int find(int i)
+{
+    while(parent[i])
+    i=parent[i];
+    return i;
+}
+
+int uni(int i,int j)
+{
+    if(i!=j)
+    {
+        parent[j]=i;
+        return 1;
+    }
     return 0;
 }
+
 
 // 0 3 1 6 0 0
 // 3 0 5 0 3 0
