@@ -41,8 +41,8 @@ int main()
                     if (visited[i] != 0)
                     {
                         min = cost[i][j];
-                        a = i;
-                        b = j;
+                        u = a = i;
+                        v = b = j;
                     }
                 }
             }
