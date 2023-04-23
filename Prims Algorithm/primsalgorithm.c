@@ -50,7 +50,8 @@ int main()
             printf("Edge %d: (%d, %d) cost %d\n", ne, a, b, min);
             visited[b] = 1; // mark the new node as visited
             ne++;
-            mincost += min; // add the cost of the edge to the total cost
+            mincost += min;
+            // add the cost of the edge to the total cost
         }
     }
     printf("Minimum cost: %d\n", mincost); // print the total cost of the MST
