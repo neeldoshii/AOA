@@ -9,7 +9,7 @@ int uni(int,int);
 
 void main()
 {
-
+    clrscr();
     printf("\n\tImplementation of Kruskal's algorithm\n");
     printf("\nEnter the no. of vertices:");
     scanf("%d",&n);
